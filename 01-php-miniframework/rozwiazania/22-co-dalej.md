@@ -1,0 +1,3 @@
+# Rozdział 22: co dalej
+
+Zadania dodatkowe warto robić w kolejności, w której każde opiera się na czymś świeżym: najpierw grupy tras (4), bo to rozszerzenie `group()` z zadania 3 w [rozdziale 12](../../../ebook-dev-start/01-php-miniframework/rozdzialy/12-middleware-i-role.md), potem relacje (2), które domykają temat `__get` z [rozdziału 9](../../../ebook-dev-start/01-php-miniframework/rozdzialy/09-metody-magiczne-czyli-jak-model-udaje.md), a dopiero potem kontener (1), najtrudniejszy, ale wtedy uczeń ma już pewną rękę w routerze. Nazwane trasy (3) i migracje (6) są dobre na krótszy dzień, a JSON API (5) zostaw na koniec, bo wymaga czytania o tokenach i najłatwiej w nim utknąć bez pomocy.
