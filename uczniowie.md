@@ -4,6 +4,6 @@ Lista uczniów, których pull requesty sprawdza skill `/review`. Jeden wiersz na
 
 | Login GitHub | Imię | Repo kursu | Uwagi |
 | --- | --- | --- | --- |
-| kuba | Jakub | kuba/miniframework | zamień login i repo na prawdziwe po tym, jak Jakub założy konto |
+| Supereeeq | Jakub | Supereeeq/miniframework | repo prywatne, opiekun zaproszony jako collaborator |
 
 Lokalne klony repozytoriów uczniów trzymamy w `uczniowie/<login>/`. Katalog jest w `.gitignore`, bo kod ucznia należy do jego repo, a tutaj jest tylko kopią roboczą.
