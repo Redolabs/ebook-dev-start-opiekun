@@ -19,7 +19,7 @@ $router->get('/hello', [HomeController::class, 'hello']);
 
 `/hello?name=Jakub` pokazuje „Cześć, Jakub!”, a `/hello?name=<b>Jakub</b>` pokazuje pogrubione imię, bo tekst od użytkownika wszedł do HTML-a bez obróbki. To celowy pokaz XSS, który [rozdział 5](../../../ebook-dev-start/01-php-miniframework/rozdzialy/05-widoki-layout-i-kontroler-bazowy.md) naprawia funkcją `e()`. Książka używa query stringa, a nie `/hello/{name}`, bo `</b>` ma ukośnik (`[^/]+` dałoby 404), a `Request::path()` nie dekoduje `%3C`, podczas gdy `$_GET` jest dekodowane przez PHP.
 
-**Na co patrzeć przy review:** sygnatura metody ma drugi parametr `string $name`; brak go daje `ArgumentCountError`. Na tym etapie brak `e()` jest zamierzony, [rozdział 5](../../../ebook-dev-start/01-php-miniframework/rozdzialy/05-widoki-layout-i-kontroler-bazowy.md) to naprawia. Sprawdź, czy uczeń nie dopisał do routera specjalnej obsługi tej jednej trasy.
+**Na co patrzeć przy review:** trasa to samo `/hello`, bez `{...}` i bez `?` (`path()` nie zawiera query stringa, a `?` w wyrażeniu regularnym robi poprzedni znak opcjonalnym: `/hello?{id}` pasuje do `/hello` z `id = 'o'`). Metoda ma tylko `Request $request`; dodatkowy wymagany parametr, np. `string $name`, przy trasie bez `{...}` daje `ArgumentCountError`. Na tym etapie brak `e()` jest zamierzony, [rozdział 5](../../../ebook-dev-start/01-php-miniframework/rozdzialy/05-widoki-layout-i-kontroler-bazowy.md) to naprawia. Sprawdź, czy uczeń nie dopisał do routera specjalnej obsługi tej jednej trasy.
 
 ## Zadanie 2: dwa parametry
 
