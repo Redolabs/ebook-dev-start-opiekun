@@ -179,3 +179,122 @@ W JSX licznik obok filtrów i trzy stany listy:
 ```
 
 **Na co patrzeć przy review:** `doneCount` ma być zwykłą stałą liczoną z `tasks`, nie stanem; wtedy licznik sam się zgadza po każdym dodaniu, oznaczeniu i usunięciu. Licznik liczy z `tasks`, a nie z `visibleTasks`, bo przy filtrze „Otwarte” pokazywałby „0 z 3”. `setLoading(false)` musi się wykonać także przy błędzie, inaczej po 401 albo 500 „Ładowanie...” zostanie na zawsze; jeśli uczeń wstawił je tylko po `setTasks`, poproś go, żeby wyłączył serwer PHP i odświeżył stronę. Zagnieżdżony operator `? :` jest czytelny przy trzech przypadkach; przy czwartym lepiej wydzielić osobną funkcję.
+
+## Zadanie 4: cofnij „zrobione”
+
+W PHP nic. `markDone` zamienia się na jedną funkcję z parametrem:
+
+```jsx
+    async function setDone(id, done) {
+        const response = await api('PATCH', '/api/tasks/' + id, { done: done });
+
+        if (!response.ok) {
+            await showError(response);
+            return;
+        }
+
+        const updated = await response.json();
+        setTasks(current => current.map(task => (task.id === updated.id ? updated : task)));
+    }
+```
+
+W `TaskItem` jeden z dwóch przycisków:
+
+```jsx
+            {task.done ? (
+                <button onClick={() => onRestore(task.id)} className="text-sm text-gray-600 hover:underline">
+                    Przywróć
+                </button>
+            ) : (
+                <button onClick={() => onDone(task.id)} className="text-sm text-green-700 hover:underline">
+                    Zrobione
+                </button>
+            )}
+```
+
+```jsx
+<TaskItem key={task.id} task={task} onDone={id => setDone(id, true)} onRestore={id => setDone(id, false)} onEdit={openEdit} onRemove={setTaskToDelete} />
+```
+
+W `api.http`:
+
+```http
+### Przywróć
+PATCH {{host}}/api/tasks/1
+Accept: application/json
+Content-Type: application/json
+Cookie: PHPSESSID={{session}}
+X-CSRF-Token: {{token}}
+
+{"done": false}
+```
+
+Odpowiedź na pytanie: przy adresach z czynnością potrzebna byłaby nowa trasa (`POST /api/tasks/{id}/undone` albo `/restore`), nowa metoda kontrolera i nowy test, czyli zmiana w trzech plikach PHP na każdą nową czynność. Przy `PATCH` stan zadania to po prostu pole `done`, a „Przywróć” to ta sama zmiana z inną wartością. Zasób i metoda już są.
+
+**Na co patrzeć przy review:** `git diff --stat main` ma pokazać tylko `public/js/tasks.jsx` i `api.http`. Nowa trasa albo metoda w `TaskApiController` znaczy, że uczeń nie złapał sensu `PATCH`; zapytaj, co robi istniejące `update()` z `{"done": false}`. W JavaScripcie ma być `false` bez cudzysłowu: `"false"` to napis i dostanie 422. Osobne `markDone` i `restoreTask` z prawie tym samym kodem przejdą, ale warto zapytać o jedną funkcję z parametrem. Jeśli zrobione są zadania 2 i 3: po „Przywróć” zadanie ma przejść z filtra „Zrobione” do „Otwarte”, a licznik zmniejszyć się o 1 bez żadnej dodatkowej linijki, bo oba liczą się z `tasks`. Uczeń, który dopisał ręczne poprawianie licznika, trzyma go w stanie zamiast liczyć.
+
+## Zadanie 5 (dla chętnych): 405 zamiast 404
+
+W `Router::dispatch()` pętla najpierw sprawdza adres, a dopiero potem metodę, i zapamiętuje metody tras, których adres pasował:
+
+```php
+        $allowed = [];
+
+        foreach ($this->routes as $route) {
+            if (!preg_match($route['pattern'], $request->path(), $matches)) {
+                continue;
+            }
+
+            // Adres pasuje, metoda nie: zapamiętaj, z jaką metodą by przeszło
+            if ($route['method'] !== $request->method()) {
+                $allowed[] = $route['method'];
+                continue;
+            }
+
+            // ... reszta bez zmian: parametry, middleware, kontroler
+        }
+
+        if ($allowed !== []) {
+            throw new HttpException(405, 'Dozwolone metody: ' . implode(', ', array_unique($allowed)));
+        }
+
+        throw new HttpException(404);
+```
+
+(Po zadaniu 1 z rozdziału 15 ostatnia linijka to `throw new NotFoundException(...)`.)
+
+Testy w `tests/ApiTest.php`:
+
+```php
+    public function testWrongMethodHasStatus405(): void
+    {
+        $_SESSION['_csrf'] = 'abc';
+        $router = new Router();
+        $router->get('/api/tasks/{id}', [\stdClass::class, 'show']);
+        $router->delete('/api/tasks/{id}', [\stdClass::class, 'destroy']);
+
+        try {
+            $router->dispatch(new Request('PUT', '/api/tasks/1', [], [], ['X-CSRF-Token' => 'abc']));
+            $this->fail('Router powinien rzucić HttpException');
+        } catch (HttpException $e) {
+            $this->assertSame(405, $e->status());
+            $this->assertSame('Dozwolone metody: GET, DELETE', $e->getMessage());
+        }
+    }
+
+    public function testUnknownPathStillHasStatus404(): void
+    {
+        try {
+            (new Router())->dispatch(new Request('GET', '/api/nie-ma', [], []));
+            $this->fail('Router powinien rzucić HttpException');
+        } catch (HttpException $e) {
+            $this->assertSame(404, $e->status());
+        }
+    }
+```
+
+Kontroler w trasach testowych nie musi istnieć (`\stdClass`), bo przy złej metodzie router nigdy go nie wywoła. Token jest potrzebny, bo CSRF sprawdzany jest przed szukaniem trasy; bez niego test dostałby 419 i nic by nie sprawdził.
+
+Odpowiedź na pytanie: 404 mówi „nie ma takiego zadania”, więc programista klienta szuka błędu w id albo w bazie. 405 z listą metod mówi od razu „adres jest dobry, metoda zła”, czyli gdzie szukać. To ta sama zasada co w pojęciu REST: status ma powiedzieć, co się stało, bez czytania kodu serwera.
+
+**Na co patrzeć przy review:** kolejność warunków w pętli ma być odwrócona (najpierw adres, potem metoda), inaczej nie da się odróżnić „zły adres” od „zła metoda”. `throw` z 405 stoi po pętli, nie w środku: trasa z pasującą metodą może być dalej na liście (`GET /api/tasks/{id}` za `PATCH`), a wyjątek w środku pętli by ją zasłonił. Sprawdź, że `curl -i -X PUT .../api/tasks/1` bez sesji i tokena daje 419, a z `api.http` 405, i że zwykłe strony dalej działają (`/`, `/tasks/1`). Standard HTTP wymaga przy 405 nagłówka `Allow: GET, DELETE`. Nasz `HttpException` nie niesie nagłówków, więc lista jest w komunikacie. Kto chce więcej, może dodać do `HttpException` tablicę nagłówków i wysyłać ją w `ErrorHandler`, ale tego nie wymagaj. Unikalność (`array_unique`) ma znaczenie tylko przy dwóch trasach z tą samą metodą i wzorcem; brak jej to drobiazg.
