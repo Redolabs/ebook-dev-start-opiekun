@@ -63,3 +63,26 @@ W `Router::dispatch()`:
 Bez `e()` odpowiedź na `curl "http://localhost:8000/<b>test</b>"` zawiera dosłownie `<p>Nie znaleziono: /<b>test</b></p>`, czyli HTML z adresu trafia do strony bez zmian: to odbity XSS. Przeglądarka zwykle koduje `<` w ścieżce, ale to jej uprzejmość, nie gwarancja. Atakujący nie musi używać przeglądarki, inne klienty i stare przeglądarki kodują inaczej, a ten sam komunikat mógłby kiedyś dostać wartość, którą PHP już dekoduje (np. z `$_GET`, gdzie `?q=<script>` przychodzi jako `<script>`). Zasada się nie zmienia: wszystko, co trafia do HTML-a, idzie przez `e()`.
 
 **Na co patrzeć przy review:** `404.php` musi obsłużyć pusty komunikat, bo `abort(404)` z `findOwn()` nie podaje treści; bez `?:` albo `if` strona pokaże pusty akapit. `e()` przywrócone w commicie. Uczeń, który odpowie „przeglądarka i tak zakoduje, więc `e()` niepotrzebne”, wyciągnął odwrotny wniosek niż trzeba.
+
+## Zadanie 4 (dla chętnych): composer lint
+
+W `composer.json`:
+
+```json
+    "scripts": {
+        "lint": "find app core public views routes.php -name '*.php' -print0 | xargs -0 -n1 php -l"
+    }
+```
+
+`-print0` i `-0` przekazują nazwy rozdzielone znakiem zerowym, więc spacje w nazwach plików niczego nie psują. `-n1` daje `php -l` jeden plik naraz, bo tak działa `-l`. Przy błędzie `php -l` kończy się kodem 255, `xargs` przerywa na pierwszym złym pliku, a Composer zgłasza „returned with error code 1”. To wystarczy, żeby zablokować commit albo krok w CI.
+
+`.git/hooks/pre-commit` (potem `chmod +x .git/hooks/pre-commit`):
+
+```sh
+#!/bin/sh
+composer lint || exit 1
+```
+
+Sprawdzone: usunięty średnik daje `Parse error ... on line N`, `composer lint` kończy się kodem 1, a `git commit` się nie wykonuje.
+
+**Na co patrzeć przy review:** `vendor/` poza listą (inaczej lint trwa długo i sprawdza cudzy kod). `routes.php` na liście, bo leży poza katalogami. Hak nie jest częścią repozytorium (`.git/hooks` nie idzie do Gita), więc w PR go nie zobaczysz; poproś o opis w „Jak sprawdzić” albo o skopiowanie go do repo (np. `bin/pre-commit`) z instrukcją instalacji. Cały wynik `composer lint` to lista „No syntax errors detected”; jeśli uczeń przekierował wyjście do `/dev/null`, upewnij się, że błędy (stderr) dalej widać. W [rozdziale 17](../../../ebook-dev-start/01-php-miniframework/rozdzialy/17-testy-automatyczne-z-phpunit.md) `test` trafia do tej samej sekcji `scripts`; druga sekcja `scripts` w JSON-ie nadpisze pierwszą. W [rozdziale 18](../../../ebook-dev-start/01-php-miniframework/rozdzialy/18-testy-calej-aplikacji-funkcjonalne-i-end.md) można dołożyć `- run: composer lint` przed `composer test` w GitHub Actions.
