@@ -4,6 +4,8 @@ Przy najbliższym review (PR #17, rozdział 17): dołącz poniższe do sekcji �
 
 ## Z PR #16 (Tailwind), stan na `main` c582285
 
+**Przeniesione do review PR #17 (punkty 5 i 6, 2026-10-30).** Przy sprawdzaniu poprawek PR #17 zobacz, czy są zrobione, i wtedy usuń ten plik.
+
 Tekst do ucznia (do wklejenia jako osobna podsekcja, np. „### Zaległe z PR #16”):
 
 > Z poprawek do PR #16 zrobiłeś najważniejsze: XSS w `404.php`, powrót „Edytuj” i filtry przy pustej liście. Dzięki. Kilka rzeczy zostało, zrób je na tej gałęzi:
