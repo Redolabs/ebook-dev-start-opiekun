@@ -1,6 +1,6 @@
 # Ebook 2: JavaScript, TypeScript i React. Plan rozdziałów
 
-Stan: plan, bez tekstu. Ten sam schemat rozdziału co w ebooku PHP: Pojęcie, Co ma umieć, Kod, Sprawdź czy działa, Zadania, Częste błędy, Git. Każdy rozdział to osobna gałąź i PR, review tak jak dotąd.
+Stan (2026-11-02): `kino-api` napisane i przetestowane (osobne repo `../kino-api`, 27 testów). Rozdziały 0, 1 i 2 napisane w `../ebook-dev-start/02-javascript-react/rozdzialy/`, rozwiązania w `02-javascript-react/rozwiazania/`. Dalsze rozdziały: plan niżej. Ten sam schemat rozdziału co w ebooku PHP: Pojęcie, Co ma umieć, Kod, Sprawdź czy działa, Zadania, Częste błędy, Git. Każdy rozdział to osobna gałąź i PR, review tak jak dotąd.
 
 Droga: trzy mini projekty w czystym JS, potem te same projekty utwardzone TypeScriptem, potem własny mini-React, potem kino w React. Każdy etap pracuje na kodzie z poprzedniego.
 
@@ -151,7 +151,8 @@ Firmy w ofertach oczekują pracy z asystentem AI, a cały kurs uczy review. Ucze
 
 ## Do rozstrzygnięcia przed pisaniem
 
-- `kino-api` trzeba napisać przed rozdziałem 10. Kto i kiedy: przed startem ebooka 2 w całości, czy endpointy dokładane przed rozdziałami, które ich potrzebują (10, 11, 25, 27).
+- `kino-api`: zrobione w całości (filmy, seanse, blokady z `X-Client-Id`, rezerwacje, tokeny, CORS, SQLite, testy). Do zrobienia: repozytorium na GitHubie i adres dla ucznia (rozdział 1 mówi „adres dostaniesz od opiekuna”).
+- Skill `/review` jest pod kurs PHP; przed pierwszym PR Kuby z ebooka 2 trzeba go rozszerzyć (notatka w `02-javascript-react/README.md`).
 - Klucz TMDB: własny Kuby czy wspólny; w rozdziale 22 i tak omawiamy, że jest widoczny.
 - Czas: 34 rozdziały to więcej niż 23 w PHP. Przy tempie z PHP to około trzech miesięcy. Część II jest krótka, ale React zaczyna się dopiero w rozdziale 16, warto to powiedzieć uczniowi na starcie.
 - WebSocket na prawdziwo: `php -S` obsługuje jedno żądanie naraz, a mini-framework nie trzyma połączeń, więc w rozdziale 25 jest polling i samo pojęcie. Jeśli chcemy kod, potrzebny jest osobny mały serwer (np. Node z biblioteką `ws`) obok `kino-api`, który rozgłasza „miejsce zajęte”. Do decyzji: dodatek po rozdziale 25 czy zostaje na pojęciu.

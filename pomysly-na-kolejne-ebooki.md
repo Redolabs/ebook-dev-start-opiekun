@@ -20,26 +20,9 @@ Czego celowo nie ma w rozdziale 1 i co warto dopisać, gdy Kuba zacznie pracowa�
 - code review z drugiej strony: jak komentować cudzy PR,
 - `git bisect` do szukania commita, który coś zepsuł.
 
-## Ebook 2: JavaScript, własny React i aplikacja w React
+## Ebook 2: JavaScript i React
 
-Cel: ta sama droga co w PHP. Najpierw ból (lista zadań w czystym JS, stan rozsypany po kodzie, DOM aktualizowany ręcznie), potem narzędzie, które go leczy (własny mini-React), potem prawdziwy React. Backend to API z ebooka PHP (`/api/tasks`), więc Kuba od pierwszego dnia pracuje na prawdziwych danych.
-
-Zasady:
-
-- JavaScript uczony przez projekt, nie przez listę składni. Każdy rozdział dokłada kawałek działającej aplikacji.
-- Obiektowość z dystansem: klasy, `this`, prototypy i moduły trzeba znać, bo są w cudzym kodzie, ale React jest funkcyjny. Więcej czasu na domknięcia, funkcje jako wartości, `map`/`filter`/`reduce`, destrukturyzację, spread, niemutowalność. Bez klasowych komponentów Reacta.
-- Dobre praktyki jako narzędzia: ESLint i Prettier od pierwszego rozdziału, małe i czyste funkcje, nazwy, brak globalnych zmiennych, rytuał Git z ebooka PHP.
-- Mini-React ograniczony do sedna (5 rozdziałów), cel to zrozumienie, nie odtworzenie Reacta.
-
-Szkic:
-
-| Część | Rozdziały | Efekt |
-| --- | --- | --- |
-| I. JavaScript przez projekt | 0–5 | Projekt z Vite, ESLint, Prettier, Git; lista zadań w czystym JS na API z PHP (DOM, zdarzenia, `fetch`, formularz); moduły `import`/`export`; domknięcia i funkcje jako wartości; tablice i obiekty; `async`/`await`; obiekty, klasy i `this` z dystansem |
-| II. Dobre praktyki | 6–7 | Refaktor własnego kodu: małe funkcje, czyste funkcje, niemutowalność, podział na moduły; pierwsze testy w Vitest |
-| III. Własny React | 8–12 | `createElement` i drzewo elementów; render do DOM; `useState` i rerender (dlaczego `setX` zamiast przypisania); `useEffect`; prosty diff i po co `key` |
-| IV. Prawdziwy React | 13–22 | Ten sam komponent w prawdziwym React (zero zmian w myśleniu); komponenty, props, podnoszenie stanu; formularze; router (najpierw własny na `history.pushState`, potem React Router); dane z API, stany ładowania i błędu, własny `useFetch`; logowanie tokenem (Sanctum-like z ebooka PHP, rozdział 21); kontekst i globalny stan; Tailwind z Vite (prawdziwy build zamiast CDN); React Testing Library i Playwright; build i wdrożenie (Vercel/Netlify/GitHub Pages) razem z backendem PHP |
-| V. Co dalej | 23–24 | TypeScript (po `strict_types` w PHP Kuba od razu rozumie, po co); Next.js; mapa „Twój mini-React a React” |
+Szczegółowy plan rozdziałów: [02-javascript-react-plan-rozdzialow.md](02-javascript-react-plan-rozdzialow.md). Skrót: trzy mini projekty w czystym JS (licznik, fiszki, repertuar na gotowym `kino-api`), te same projekty przeniesione na TypeScript w trzech rozdziałach, własny mini-React w TS, potem jedno kino w React rozbite na moduły (TMDB, wybór miejsc, rezerwacja z limitem czasu, logowanie tokenem). Backend to gotowe repo `kino-api` na mini-frameworku z ebooka 1, więc ebook 2 jest samodzielny.
 
 ## Ebook 3: Mini-framework webowy w Pythonie
 
