@@ -18,3 +18,6 @@ Gałęzie z książki:
 | katalog `js-rozgrzewka/` | 0 |
 | `feature/setup` | 1 |
 | `feature/countdown-dom` | 2 |
+| `feature/countdown-class` | 3 |
+| `feature/countdown-many` | 4 |
+| `feature/countdown-closure` | 5 |
