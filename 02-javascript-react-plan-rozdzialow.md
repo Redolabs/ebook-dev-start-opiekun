@@ -151,7 +151,7 @@ Firmy w ofertach oczekują pracy z asystentem AI, a cały kurs uczy review. Ucze
 
 ## Do rozstrzygnięcia przed pisaniem
 
-- `kino-api`: zrobione w całości (filmy, seanse, blokady z `X-Client-Id`, rezerwacje, tokeny, CORS, SQLite, testy). Do zrobienia: repozytorium na GitHubie i adres dla ucznia (rozdział 1 mówi „adres dostaniesz od opiekuna”).
+- `kino-api`: zrobione w całości (filmy, seanse, blokady z `X-Client-Id`, rezerwacje, tokeny, CORS, SQLite, testy). Repozytorium: https://github.com/Redolabs/kino-api (prywatne). Przed rozdziałem 1 ebooka 2 trzeba dodać ucznia jako collaboratora.
 - Skill `/review` jest pod kurs PHP; przed pierwszym PR Kuby z ebooka 2 trzeba go rozszerzyć (notatka w `02-javascript-react/README.md`).
 - Klucz TMDB: własny Kuby czy wspólny; w rozdziale 22 i tak omawiamy, że jest widoczny.
 - Czas: 34 rozdziały to więcej niż 23 w PHP. Przy tempie z PHP to około trzech miesięcy. Część II jest krótka, ale React zaczyna się dopiero w rozdziale 16, warto to powiedzieć uczniowi na starcie.
