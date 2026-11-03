@@ -24,3 +24,6 @@ Gałęzie z książki:
 | `feature/fiszki-moduly` | 6 |
 | `feature/fiszki-formularz` | 7 |
 | `feature/fiszki-stan` | 8 |
+| `feature/fiszki-testy` | 9 |
+| `feature/repertuar-fetch` | 10 |
+| `feature/repertuar-blokada` | 11 |
