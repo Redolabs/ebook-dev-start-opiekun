@@ -1,6 +1,6 @@
 # Ebook 2: JavaScript, TypeScript i React. Plan rozdziałów
 
-Stan (2026-11-02): `kino-api` napisane i przetestowane (osobne repo `../kino-api`, 27 testów). Rozdziały 0, 1 i 2 napisane w `../ebook-dev-start/02-javascript-react/rozdzialy/`, rozwiązania w `02-javascript-react/rozwiazania/`. Dalsze rozdziały: plan niżej. Ten sam schemat rozdziału co w ebooku PHP: Pojęcie, Co ma umieć, Kod, Sprawdź czy działa, Zadania, Częste błędy, Git. Każdy rozdział to osobna gałąź i PR, review tak jak dotąd.
+Stan (2026-11-03): `kino-api` napisane i przetestowane (osobne repo `../kino-api`, 27 testów). Rozdziały 0–8 napisane w `../ebook-dev-start/02-javascript-react/rozdzialy/`, rozwiązania w `02-javascript-react/rozwiazania/`. Dalsze rozdziały: plan niżej. Ten sam schemat rozdziału co w ebooku PHP: Pojęcie, Co ma umieć, Kod, Sprawdź czy działa, Zadania, Częste błędy, Git. Każdy rozdział to osobna gałąź i PR, review tak jak dotąd.
 
 Droga: trzy mini projekty w czystym JS, potem te same projekty utwardzone TypeScriptem, potem własny mini-React, potem kino w React. Każdy etap pracuje na kodzie z poprzedniego.
 

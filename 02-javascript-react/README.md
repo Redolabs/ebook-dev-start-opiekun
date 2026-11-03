@@ -21,3 +21,6 @@ Gałęzie z książki:
 | `feature/countdown-class` | 3 |
 | `feature/countdown-many` | 4 |
 | `feature/countdown-closure` | 5 |
+| `feature/fiszki-moduly` | 6 |
+| `feature/fiszki-formularz` | 7 |
+| `feature/fiszki-stan` | 8 |
