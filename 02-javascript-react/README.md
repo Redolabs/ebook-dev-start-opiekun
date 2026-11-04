@@ -27,3 +27,6 @@ Gałęzie z książki:
 | `feature/fiszki-testy` | 9 |
 | `feature/repertuar-fetch` | 10 |
 | `feature/repertuar-blokada` | 11 |
+| `feature/repertuar-render` | 12 |
+| `feature/typescript-licznik-fiszki` | 13 |
+| `feature/typescript-repertuar` | 14 |
