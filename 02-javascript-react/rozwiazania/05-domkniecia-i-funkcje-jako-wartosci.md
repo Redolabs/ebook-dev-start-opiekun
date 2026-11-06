@@ -50,8 +50,8 @@ function createStopwatch(root) {
     startedAt = Date.now();
     stoppedAt = null;
     laps.length = 0;
-    render();
     intervalId = setInterval(render, 250);
+    render();
   }
 
   function lap() {

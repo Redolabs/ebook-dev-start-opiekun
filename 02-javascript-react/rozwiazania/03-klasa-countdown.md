@@ -15,8 +15,8 @@ class Stopwatch {
   start() {
     this.stop();
     this.startedAt = Date.now();
-    this.render();
     this.intervalId = setInterval(() => this.render(), 250);
+    this.render();
   }
 
   stop() {
